@@ -30,7 +30,7 @@ const getStorLocal = (item) => {
     return null;
 }
 
-const API_URL = 'http://localhost:8000'
+const API_URL = 'https://backend-paideia.herokuapp.com/'
 //   /jwt/verify/
 export const check_authenticated =()=> async dispatch =>{
     if(getStorLocal('access')){
