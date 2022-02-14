@@ -30,7 +30,7 @@ const getStorLocal = (item) => {
     return null;
 }
 
-const API_URL = 'https://backend-paideia.herokuapp.com'
+const url = 'https://backend-paideia.herokuapp.com'
 //   /jwt/verify/
 export const check_authenticated =()=> async dispatch =>{
     if(getStorLocal('access')){
@@ -46,7 +46,7 @@ export const check_authenticated =()=> async dispatch =>{
 
         try {
             
-            const res = await axios.post(`${API_URL}/auth/jwt/verify/`,body,config);
+            const res = await axios.post(`${url}/auth/jwt/verify/`,body,config);
 
             if(res.status===200){
                 dispatch({
@@ -88,7 +88,7 @@ export const signup=(first_name,last_name,email,password,re_password) => async d
     })
 
     try {
-        const res = await axios.post(`${API_URL}/auth/users/`,body,config);
+        const res = await axios.post(`${url}/auth/users/`,body,config);
 
         if(res.status===201){
             dispatch({
@@ -109,8 +109,6 @@ export const signup=(first_name,last_name,email,password,re_password) => async d
         });
         
     } catch (err) {
-        console.log("error")
-        console.log(err)
         dispatch({
             type: SIGNUP_FAIL
         });
@@ -135,7 +133,7 @@ export const load_user = () => async dispatch =>{
         };
 
         try {
-            const res= await axios.get(`${API_URL}/auth/users/me/`,config)
+            const res= await axios.get(`${url}/auth/users/me/`,config)
             if (res.status===200){
                 dispatch({
                     type: USER_LOADED_OK,
@@ -175,9 +173,8 @@ export const login = (email,password) => async dispatch =>{
         email,
         password
     });
-    console.log(API_URL)
     try {
-        const res = await axios.post(`${API_URL}/auth/jwt/create/`,body,config);
+        const res = await axios.post(`${url}/auth/jwt/create/`,body,config);
 
         if (res.status === 200){
             console.log("good")
@@ -190,7 +187,6 @@ export const login = (email,password) => async dispatch =>{
             dispatch(load_user());
                 
             } catch (error) {
-            console.log("bad")
                 
             }
             dispatch({
@@ -236,7 +232,7 @@ export const activate = (uid,token) => async dispatch =>{
     });
 
     try {
-        const res= await axios.post(`${API_URL}/auth/users/activation/`,body,config);
+        const res= await axios.post(`${url}/auth/users/activation/`,body,config);
 
         if(res.status === 204){
             dispatch({
@@ -276,7 +272,7 @@ export const refresh = ()=> async dispatch =>{
         });
 
         try {
-            const res = await axios.post(`${API_URL}/auth/jwt/refresh/`, body, config);
+            const res = await axios.post(`${url}/auth/jwt/refresh/`, body, config);
 
             if (res.status===200){
                 dispatch({
@@ -317,7 +313,7 @@ export const reset_password = (email)=> async dispatch => {
     const body = JSON.stringify({ email });
 
     try {
-        const res = await axios.post(`${API_URL}/auth/users/reset_password/`, body, config);
+        const res = await axios.post(`${url}/auth/users/reset_password/`, body, config);
         if (res.status===204){
             dispatch({
                 type:RESET_PASSWORD_OK
@@ -361,7 +357,7 @@ export const reset_password_confirm =(uid,token,new_password,re_new_password)=> 
     });
 
     if (new_password ===re_new_password){
-        const res = await axios.post(`${API_URL}/auth/users/reset_password_confirm/`,body,config)
+        const res = await axios.post(`${url}/auth/users/reset_password_confirm/`,body,config)
 
         if (res.status===204){
             dispatch({
